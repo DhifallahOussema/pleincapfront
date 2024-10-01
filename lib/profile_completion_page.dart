@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'home.dart'; // Import HomePage from the separate file
@@ -13,7 +12,8 @@ class ProfileCompletionPage extends StatefulWidget {
   final String email;
   final String password;
 
-  const ProfileCompletionPage({super.key, required this.email, required this.password});
+  const ProfileCompletionPage(
+      {super.key, required this.email, required this.password});
 
   @override
   _ProfileCompletionPageState createState() => _ProfileCompletionPageState();
@@ -46,14 +46,17 @@ class _ProfileCompletionPageState extends State<ProfileCompletionPage> {
     });
 
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: widget.email,
         password: widget.password,
       );
 
       User? user = userCredential.user;
       if (user != null) {
-        await user.updateProfile(displayName: '${_firstNameController.text} ${_lastNameController.text}');
+        await user.updateProfile(
+            displayName:
+                '${_firstNameController.text} ${_lastNameController.text}');
 
         await _firestore.collection('users').doc(user.uid).set({
           'firstName': _firstNameController.text,
@@ -87,171 +90,192 @@ class _ProfileCompletionPageState extends State<ProfileCompletionPage> {
         child: _formCompleted
             ? const CongratulatoryContainer()
             : SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.05,
-              vertical: MediaQuery.of(context).size.height * 0.02,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Image.network(
-                      'https://storage.googleapis.com/codeless-app.appspot.com/uploads%2Fimages%2F0R_P0HtZ4z4QR1KDEHN8%2F212f531a41e4c6b4d1ffe4fdddd375aa.png',
-                      width: 37,
-                      height: 20,
-                      fit: BoxFit.contain,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      'Remplir votre Profil',
-                      style: GoogleFonts.jost(
-                        color: const Color(0xFF202244),
-                        fontSize: 21,
-                        fontWeight: FontWeight.w600,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.05,
+                    vertical: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Image.network(
+                            'https://storage.googleapis.com/codeless-app.appspot.com/uploads%2Fimages%2F0R_P0HtZ4z4QR1KDEHN8%2F212f531a41e4c6b4d1ffe4fdddd375aa.png',
+                            width: 37,
+                            height: 20,
+                            fit: BoxFit.contain,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            'Remplir votre Profil',
+                            style: GoogleFonts.jost(
+                              color: const Color(0xFF202244),
+                              fontSize: 21,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                Center(
-                  child: GestureDetector(
-                    onTap: _pickImage,
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE8F1FF),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: ClipOval(
-                        child: _image != null
-                            ? Image.file(
-                          File(_image!.path),
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        )
-                            : const Icon(
-                          Icons.camera_alt,
-                          color: Colors.blue,
-                          size: 50,
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03),
+                      Center(
+                        child: GestureDetector(
+                          onTap: _pickImage,
+                          child: Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE8F1FF),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: ClipOval(
+                              child: _image != null
+                                  ? Image.file(
+                                      File(_image!.path),
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : const Icon(
+                                      Icons.camera_alt,
+                                      color: Colors.blue,
+                                      size: 50,
+                                    ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextField(
+                            controller: _firstNameController,
+                            decoration: InputDecoration(
+                              labelText: 'Prénom',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                            ),
+                          ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
+                          TextField(
+                            controller: _lastNameController,
+                            decoration: InputDecoration(
+                              labelText: 'Nom',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                            ),
+                          ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
+                          TextField(
+                            controller: _dobController,
+                            decoration: InputDecoration(
+                              labelText: 'Date de Naissance',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                            ),
+                          ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
+                          TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Email',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                            ),
+                            controller:
+                                TextEditingController(text: widget.email),
+                          ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
+                          TextField(
+                            controller: _phoneController,
+                            onChanged: (String number) {
+                              if (kDebugMode) {
+                                print(number);
+                              }
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Numéro',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                            ),
+                          ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
+                          DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              labelText: 'Sexe',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            items: <String>['Mâle', 'Femme', 'Autre']
+                                .map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {},
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03),
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical:
+                                  MediaQuery.of(context).size.height * 0.02),
+                          child: ElevatedButton(
+                            onPressed: _onFormSubmit,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF0961F5),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              minimumSize: const Size(double.infinity, 60),
+                            ),
+                            child: Text(
+                              'Continuer',
+                              style: GoogleFonts.jost(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextField(
-                      controller: _firstNameController,
-                      decoration: InputDecoration(
-                        labelText: 'Prénom',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                    TextField(
-                      controller: _lastNameController,
-                      decoration: InputDecoration(
-                        labelText: 'Nom',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                    TextField(
-                      controller: _dobController,
-                      decoration: InputDecoration(
-                        labelText: 'Date de Naissance',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      ),
-                      controller: TextEditingController(text: widget.email),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                    TextField(
-  controller: _phoneController,
-  onChanged: (String number) {
-    if (kDebugMode) {
-      print(number);
-    }
-  },
-  decoration: InputDecoration(
-    labelText: 'Numéro',
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-    ),
-    contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-  ),
-),
-                    
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                    DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        labelText: 'Sexe',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      items: <String>['Mâle', 'Femme', 'Autre'].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {},
-                    ),
-                  ],
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.02),
-                    child: ElevatedButton(
-                      onPressed: _onFormSubmit,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0961F5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        minimumSize: const Size(double.infinity, 60),
-                      ),
-                      child: Text(
-                        'Continuer',
-                        style: GoogleFonts.jost(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }
@@ -351,7 +375,7 @@ class CongratulatoryContainer extends StatelessWidget {
                 height: 52,
                 child: Text(
                   "Bienvenue dans l'application, "
-                      "toutes les fonctionnalités sont désormais accessibles !",
+                  "toutes les fonctionnalités sont désormais accessibles !",
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -397,5 +421,3 @@ class CongratulatoryContainer extends StatelessWidget {
     );
   }
 }
-
-
