@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "355124963390",
+    "project_id": "pleincap-4622c",
+    "storage_bucket": "pleincap-4622c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355124963390:android:c8c3e6fa13de95890c496f",
+        "android_client_info": {
+          "package_name": "com.pleincap.pleincapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "355124963390-9bumoa1u1nr9mdptgjv99egncrutoe1t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNpuQXCLbfutByL1Z8N2KGO-kZ8P2Tzgw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "355124963390-9bumoa1u1nr9mdptgjv99egncrutoe1t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
