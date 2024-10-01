@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'formations.dart';
-
+// s
 class Info12Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
