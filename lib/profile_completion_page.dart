@@ -190,23 +190,22 @@ class _ProfileCompletionPageState extends State<ProfileCompletionPage> {
                       controller: TextEditingController(text: widget.email),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                    InternationalPhoneNumberInput(
-                      onInputChanged: (PhoneNumber number) {
-                        if (kDebugMode) {
-                          print(number.phoneNumber);
-                        }
-                      },
-                      initialValue: PhoneNumber(isoCode: 'US'),
-                      textFieldController: _phoneController,
-                      formatInput: false,
-                      inputDecoration: InputDecoration(
-                        labelText: 'Téléphone',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      ),
-                    ),
+                    TextField(
+  controller: _phoneController,
+  onChanged: (String number) {
+    if (kDebugMode) {
+      print(number);
+    }
+  },
+  decoration: InputDecoration(
+    labelText: 'Numéro',
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+  ),
+),
+                    
                     SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     DropdownButtonFormField<String>(
                       decoration: InputDecoration(
